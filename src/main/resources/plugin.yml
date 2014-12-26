@@ -1,0 +1,3 @@
+name: BukkitIssueTracker
+main: net.jaredbates.BukkitIssueTracker.BukkitIssueTracker
+version: 1.0
