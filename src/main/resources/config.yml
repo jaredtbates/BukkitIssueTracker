@@ -1,9 +1,12 @@
 # Authentication may occur using OAuth or Credentials.
 # If you do not know what the difference is, just use Credentials.
 # If you enable OAuth, Credentials will be disabled.
-Credentials:
-  Username: foo
-  Password: bar
-OAuth:
-  Enabled: false
-  Token: foobar
+GitHub:
+  Credentials:
+    Username: foo
+    Password: bar
+  OAuth:
+    Enabled: false
+    Token: foobar
+Repository:
+  Name: foobar
