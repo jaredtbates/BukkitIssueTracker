@@ -6,7 +6,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
 public class BukkitIssueTracker extends JavaPlugin {
-    @Getter private GitHubClient gitHubClient = new GitHubClient();
+    @Getter
+    private GitHubClient gitHubClient = new GitHubClient();
     @Getter
     private boolean gitHubOAuth = false;
     @Getter

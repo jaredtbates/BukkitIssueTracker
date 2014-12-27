@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
-    BukkitIssueTracker plugin;
+    private BukkitIssueTracker plugin;
 
     public PlayerJoinListener(BukkitIssueTracker plugin) {
         this.plugin = plugin;
