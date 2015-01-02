@@ -8,5 +8,5 @@ GitHub:
   OAuth:
     Enabled: false
     Token: foobar
-Repository:
-  Name: foobar
+Repository: foobar
+JoinMessage: true
