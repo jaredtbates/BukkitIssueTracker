@@ -1,6 +1,7 @@
 package net.jaredbates.BukkitIssueTracker;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.jaredbates.BukkitIssueTracker.Listeners.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.egit.github.core.Repository;
@@ -15,17 +16,14 @@ public class BukkitIssueTracker extends JavaPlugin {
     @Getter
     private GitHubClient gitHubClient = new GitHubClient();
     @Getter
-    private boolean gitHubOAuth = false;
-    @Getter
-    private String gitHubUsername;
-    @Getter
-    private String gitHubPassword;
-    @Getter
-    private String oAuthToken;
-    @Getter
-    private Repository repository;
+    private String username;
     @Getter
     private RepositoryService repositoryService;
+    @Getter
+    private String repositoryName;
+    @Getter
+    @Setter
+    private Repository repository;
     @Getter
     private boolean joinMessage;
 
@@ -34,7 +32,7 @@ public class BukkitIssueTracker extends JavaPlugin {
         saveDefaultConfig();
         try {
             setupConfig();
-        } catch (IOException e) {
+        } catch (IOException exception) {
             return;
         }
         setupListeners();
@@ -46,19 +44,12 @@ public class BukkitIssueTracker extends JavaPlugin {
 
     private void setupConfig() throws IOException {
         try {
-            gitHubOAuth = getConfig().getBoolean("OAuth.Enabled");
-            if (isGitHubOAuth()) {
-                oAuthToken = getConfig().getString("OAuth.Token");
-                gitHubClient.setOAuth2Token(oAuthToken);
-            } else {
-                gitHubUsername = getConfig().getString("GitHub.Credentials.Username");
-                gitHubPassword = getConfig().getString("GitHub.Credentials.Password");
-                gitHubClient.setCredentials(gitHubUsername, gitHubPassword);
-            }
+            username = getConfig().getString("Username");
             repositoryService = new RepositoryService(gitHubClient);
-            repository = repositoryService.getRepository(gitHubUsername, getConfig().getString("Repository"));
+            repositoryName = getConfig().getString("Repository");
+            repository = repositoryService.getRepository(username, repositoryName);
             joinMessage = getConfig().getBoolean("JoinMessage");
-        } catch (IOException exception) {
+        } catch (Exception exception) {
             getLogger().severe("Malformed configuration file! Disabling plugin.");
             setEnabled(false);
             throw new IOException();

@@ -1,12 +1,6 @@
-# Authentication may occur using OAuth or Credentials.
-# If you do not know what the difference is, just use Credentials.
-# If you enable OAuth, Credentials will be disabled.
-GitHub:
-  Credentials:
-    Username: foo
-    Password: bar
-  OAuth:
-    Enabled: false
-    Token: foobar
+# REPOSITORIES MUST BE PUBLIC
+# I WILL ADD SUPPORT FOR PRIVATE REPOS SOON
+# Username may be an organization as well.
+Username: foobar
 Repository: foobar
 JoinMessage: true
