@@ -1,3 +1,23 @@
 name: BukkitIssueTracker
 main: net.jaredbates.BukkitIssueTracker.BukkitIssueTracker
 version: 1.0
+author: computerwizjared
+description: Issue Tracker for Bukkit that integrates with GitHub
+commands:
+  issues:
+    description: Opens the Issues Control Panel
+    usage: /issues
+    permission: BukkitIssueTracker.ControlPanel
+permissions:
+  BukkitIssueTracker.*:
+    description: Gives access to all commands
+    children:
+      BukkitIssueTracker.ControlPanel: true
+      BukkitIssueTracker.JoinMessage: true
+    default: op
+  BukkitIssueTracker.ControlPanel:
+    description: Gives access to the Issues Control Panel
+    default: op
+  BukkitIssueTracker.JoinMessage:
+    description: Shows join message on login
+    default: op

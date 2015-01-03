@@ -2,10 +2,12 @@ package net.jaredbates.BukkitIssueTracker;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.jaredbates.BukkitIssueTracker.Commands.IssuesCommand;
 import net.jaredbates.BukkitIssueTracker.Listeners.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.io.IOException;
@@ -25,6 +27,8 @@ public class BukkitIssueTracker extends JavaPlugin {
     @Setter
     private Repository repository;
     @Getter
+    private IssueService issueService;
+    @Getter
     private boolean joinMessage;
 
     public void onEnable() {
@@ -36,6 +40,7 @@ public class BukkitIssueTracker extends JavaPlugin {
             return;
         }
         setupListeners();
+        setupCommands();
     }
 
     public void onDisable() {
@@ -48,6 +53,7 @@ public class BukkitIssueTracker extends JavaPlugin {
             repositoryService = new RepositoryService(gitHubClient);
             repositoryName = getConfig().getString("Repository");
             repository = repositoryService.getRepository(username, repositoryName);
+            issueService = new IssueService(gitHubClient);
             joinMessage = getConfig().getBoolean("JoinMessage");
         } catch (Exception exception) {
             getLogger().severe("Malformed configuration file! Disabling plugin.");
@@ -58,5 +64,9 @@ public class BukkitIssueTracker extends JavaPlugin {
 
     private void setupListeners() {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+    }
+
+    private void setupCommands() {
+        getCommand("issues").setExecutor(new IssuesCommand(this));
     }
 }
