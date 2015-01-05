@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class IssueListInventory {
     private BukkitIssueTracker plugin = BukkitIssueTracker.getInstance();
-    private Inventory panel = Bukkit.createInventory(null, 9, "§bIssue List");
+    private Inventory issueList = Bukkit.createInventory(null, 54, "§bIssue List");
 
     public IssueListInventory(Player player) {
         try {
@@ -22,13 +22,22 @@ public class IssueListInventory {
             for (Issue issue : plugin.getIssueService().getIssues(plugin.getUsername(), plugin.getRepositoryName(), null)) {
                 ItemStack issueItem = new ItemStack(Material.WOOL, 1, (short) 14);
                 ItemMeta issueItemMeta = issueItem.getItemMeta();
-                issueItemMeta.setDisplayName("§a" + issue.getTitle());
+                issueItemMeta.setDisplayName("§c" + issue.getTitle());
                 issueItemMeta.setLore(Arrays.asList("§7#" + issue.getNumber()));
                 issueItem.setItemMeta(issueItemMeta);
-                panel.setItem(i, issueItem);
+                issueList.setItem(i, issueItem);
                 i++;
             }
-            player.openInventory(panel);
+            if (i == 0) {
+                ItemStack noIssues = new ItemStack(Material.WOOL, 1, (short) 5);
+                ItemMeta noIssuesMeta = noIssues.getItemMeta();
+                noIssuesMeta.setDisplayName("§aNo Issues!");
+                noIssues.setItemMeta(noIssuesMeta);
+                for (int n = 0; n < 54; n++) {
+                    issueList.setItem(n, noIssues);
+                }
+            }
+            player.openInventory(issueList);
         } catch (Exception e) {
             plugin.getLogger().severe("Could not connect to repository!");
         }

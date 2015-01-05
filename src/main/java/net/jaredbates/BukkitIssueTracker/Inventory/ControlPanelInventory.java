@@ -18,6 +18,13 @@ public class ControlPanelInventory {
         viewOpenIssuesItemMeta.setDisplayName("§aView Open Issues");
         viewOpenIssuesItem.setItemMeta(viewOpenIssuesItemMeta);
         panel.addItem(viewOpenIssuesItem);
+        for (int n = 1; n < 9; n++) {
+            ItemStack comingSoon = new ItemStack(Material.WORKBENCH);
+            ItemMeta comingSoonMeta = comingSoon.getItemMeta();
+            comingSoonMeta.setDisplayName("§aMore Features Coming Soon!");
+            comingSoon.setItemMeta(comingSoonMeta);
+            panel.setItem(n, comingSoon);
+        }
         player.openInventory(panel);
     }
 }
