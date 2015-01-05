@@ -34,6 +34,7 @@ public class InventoryClickListener implements Listener {
                     switch (slot) {
                         case 0:
                             new IssueListInventory(player);
+                            return;
                         default:
                             player.sendMessage("§aMore features are coming soon! Please send computerwizjared a message on SpigotMC if you would like a specific feature!");
                     }
