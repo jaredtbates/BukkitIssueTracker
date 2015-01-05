@@ -1,7 +1,7 @@
 package net.jaredbates.BukkitIssueTracker.Commands;
 
 import net.jaredbates.BukkitIssueTracker.BukkitIssueTracker;
-import net.jaredbates.BukkitIssueTracker.Inventory.PanelInventory;
+import net.jaredbates.BukkitIssueTracker.Inventory.ControlPanelInventory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,7 @@ public class IssuesCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            new PanelInventory(player);
+            new ControlPanelInventory(player);
             return true;
         }
         return false;

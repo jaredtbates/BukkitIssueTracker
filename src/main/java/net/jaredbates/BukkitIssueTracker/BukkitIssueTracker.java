@@ -3,6 +3,7 @@ package net.jaredbates.BukkitIssueTracker;
 import lombok.Getter;
 import lombok.Setter;
 import net.jaredbates.BukkitIssueTracker.Commands.IssuesCommand;
+import net.jaredbates.BukkitIssueTracker.Listeners.InventoryClickListener;
 import net.jaredbates.BukkitIssueTracker.Listeners.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.egit.github.core.Repository;
@@ -19,6 +20,8 @@ public class BukkitIssueTracker extends JavaPlugin {
     private GitHubClient gitHubClient = new GitHubClient();
     @Getter
     private String username;
+    @Getter
+    private String password;
     @Getter
     private RepositoryService repositoryService;
     @Getter
@@ -50,12 +53,15 @@ public class BukkitIssueTracker extends JavaPlugin {
     private void setupConfig() throws IOException {
         try {
             username = getConfig().getString("Username");
+            password = getConfig().getString("Password");
+            gitHubClient.setCredentials(username, password);
+            gitHubClient.setUserAgent("BukkitIssueTracker");
             repositoryService = new RepositoryService(gitHubClient);
             repositoryName = getConfig().getString("Repository");
             repository = repositoryService.getRepository(username, repositoryName);
             issueService = new IssueService(gitHubClient);
             joinMessage = getConfig().getBoolean("JoinMessage");
-        } catch (Exception exception) {
+        } catch (Exception e) {
             getLogger().severe("Malformed configuration file! Disabling plugin.");
             setEnabled(false);
             throw new IOException();
@@ -64,6 +70,7 @@ public class BukkitIssueTracker extends JavaPlugin {
 
     private void setupListeners() {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+        getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
     }
 
     private void setupCommands() {

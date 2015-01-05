@@ -21,11 +21,15 @@ public class PlayerJoinListener implements Listener {
         if (plugin.isJoinMessage()) {
             if (player.hasPermission("BukkitIssueTracker.JoinMessage")) {
                 try {
-                    plugin.setRepository(plugin.getRepositoryService().getRepository(plugin.getUsername(), plugin.getRepositoryName()));
+                    plugin.setRepository(plugin.getRepositoryService().getRepository(plugin.getRepository()));
                     int issues = plugin.getRepository().getOpenIssues();
-                    player.sendMessage("§7There are currently §c" + issues + " §7issues open.");
-                } catch (IOException exception) {
+                    if (issues != 0) {
+                        player.sendMessage("§7There are currently §c" + issues + " §7issues open.");
+                        player.sendMessage("§7View these issues with §c/issues§7.");
+                    }
+                } catch (IOException e) {
                     plugin.getLogger().severe("Could not connect to repository!");
+                    e.printStackTrace();
                 }
             }
         }

@@ -1,6 +1,5 @@
-# REPOSITORIES MUST BE PUBLIC
-# I WILL ADD SUPPORT FOR PRIVATE REPOS SOON
-# Username may be an organization as well.
-Username: foobar
+# ORGANIZATIONS NOT SUPPORTED.
+Username: foo
+Password: bar
 Repository: foobar
 JoinMessage: true
